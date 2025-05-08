@@ -47,16 +47,18 @@ def sigmoid(z):
     return 1 / (1 + np.exp(-z))
 
 def predict(W2, b2, W3, b3, X):
-    # Camada de entrada
+    #W = pesos e B = bias, que são utilizados no gradiente
+    # Camada de entrada, que recebe os dados de entrada x1, x2 e x3. (Camada AND?)
     a1 = X  # (5000, 400)
 
-    # Camada intermediária
+    # Camada intermediária (oculta), que processa os dados intermediários e cria representações abstratas (Camada XOR?)
     z2 = np.dot(a1, W2.T) + b2.squeeze()  
     a2 = sigmoid(z2)
 
-    # Camada de saída
+    # Camada de saída, gera a previsão final do modelo (Camada OR?)
     z3 = np.dot(a2, W3.T) + b3.squeeze()  
     a3 = sigmoid(z3)
+    # As sigmoids são utilizadas para criar funções não lineares, que permitem identificar padrões complexos que modelos lineares não conseguem.
 
     # Previsão = índice da maior ativação + 1
     return np.argmax(a3, axis=1) + 1

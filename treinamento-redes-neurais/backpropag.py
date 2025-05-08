@@ -65,11 +65,15 @@ def cost_function(nn_params, input_layer_size, hidden_layer_size, num_labels, X,
     delta3 = a3 - Y
     delta2 = (delta3 @ W3) * sigmoid_gradient(z2)
 
-    # Gradientes
+    # Gradientes (sem regularização)
+    # Aqui, é feito o produto matricial entre o erro e o A2, que vem da camada de saída, a divisão por m se dá para a normalização (média dos gradientes) (para os pesos)
     W3_grad = (delta3.T @ a2) / m
+    # Aqui vai ser o cálculo do gradiente da função de custo para a camada de saída, no caso a terceira camada (para os bias)
     b3_grad = np.sum(delta3, axis=0, keepdims=True) / m
 
+    # Aqui, é feito o produto matricial entre o erro e o A1, que vem da camada intermediária (oculta), a divisão por m se dá para a normalização (média dos gradientes) (para os pesos)
     W2_grad = (delta2.T @ a1) / m
+    # Aqui vai ser o cálculo do gradiente da função de custo para a camada intermediária (oculta), no caso a segunda camada (para os bias)
     b2_grad = np.sum(delta2, axis=0, keepdims=True) / m
 
 
@@ -173,16 +177,18 @@ b3 = nn_params[W2_size + b2_size + W3_size:].reshape(1, num_labels)
 print("Rede treinada com sucesso!")
 
 def predict(W2, b2, W3, b3, X):
-    # Camada de entrada
+    #W = pesos e B = bias, que são utilizados no gradiente
+    # Camada de entrada, que recebe os dados de entrada x1, x2 e x3. (Camada AND?)
     a1 = X  # (5000, 400)
 
-    # Camada intermediária
+    # Camada intermediária (oculta), que processa os dados intermediários e cria representações abstratas (Camada XOR?)
     z2 = np.dot(a1, W2.T) + b2.squeeze()  
     a2 = sigmoid(z2)
 
-    # Camada de saída
+    # Camada de saída, gera a previsão final do modelo (Camada OR?)
     z3 = np.dot(a2, W3.T) + b3.squeeze()  
     a3 = sigmoid(z3)
+    # As sigmoids são utilizadas para criar funções não lineares, que permitem identificar padrões complexos que modelos lineares não conseguem.
 
     # Previsão = índice da maior ativação + 1
     return np.argmax(a3, axis=1) + 1
