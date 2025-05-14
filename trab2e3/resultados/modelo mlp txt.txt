@@ -1,0 +1,13 @@
+c:\Users\Aluno\Downloads\T_IA\T_IA\padrao.py:75: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  labels = torch.tensor(labels, dtype=torch.float32).to(device).view(-1, 1)
+Epoch 1 concluída.
+Epoch 2 concluída.
+Epoch 3 concluída.
+Epoch 4 concluída.
+Epoch 5 concluída.
+Epoch 6 concluída.
+Epoch 7 concluída.
+Epoch 8 concluída.
+Epoch 9 concluída.
+Epoch 10 concluída.
+Acurácia do modelo: 1.0000
